@@ -3,7 +3,9 @@ package ucf.assignments;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
+
 public class Controller {
+
 
     @FXML
     public void AddItemButtonClicked(ActionEvent actionEvent) {
@@ -35,6 +37,7 @@ public class Controller {
     @FXML
     public void SearchSerialButtonClicked(ActionEvent actionEvent) {
     }
+
 
 
 
