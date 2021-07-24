@@ -4,19 +4,23 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.time.format.DateTimeFormatter;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
-public class Controller {
+public class Controller implements Initializable {
     ObservableList<Item> Inventory = FXCollections.observableArrayList();
 
-    @FXML TextField valueTextField;
-    @FXML TextField serialTextField;
-    @FXML TextField nameTextField;
+    @FXML TextField ValueTextField;
+    @FXML TextField SerialTextField;
+    @FXML TextField NameTextField;
     @FXML TableView<Item> displayTable;
     @FXML TableColumn<Item, String> valueColumn;
     @FXML TableColumn<Item, String> serialColumn;
@@ -29,15 +33,16 @@ public class Controller {
         // runs itemAdd()
         // runs displayAll()
 
-        String value = valueTextField.getText();
-        String serial = serialTextField.getText();
+        String value = ValueTextField.getText();
+        String serialNumber = SerialTextField.getText();
         // check if serial exists
 
-        String name = nameTextField.getText();
+        String name = NameTextField.getText();
         if(name.length() < 257 && name.length() > 1)
         {
-            itemAdd(value, serial, name);
+            itemAdd(value, serialNumber, name);
         }
+
         displayAll();
     }
 
@@ -122,4 +127,11 @@ public class Controller {
         }
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources)
+    {
+        valueColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("value"));
+        serialColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("serialNumber"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
+    }
 }
