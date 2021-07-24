@@ -18,9 +18,8 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="SaveAs" />
-                  <MenuItem mnemonicParsing="false" text="Load" />
-                  <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" onAction="#SaveAsButtonClicked" text="SaveAs" />
+                  <MenuItem mnemonicParsing="false" onAction="#LoadButtonClicked" text="Load" />
             </items>
           </Menu>
         </menus>
@@ -57,7 +56,7 @@
       </Pane>
    </left>
    <right>
-      <TableView prefHeight="574.0" prefWidth="710.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="displayTable" prefHeight="574.0" prefWidth="710.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="valueColumn" prefWidth="91.99994051456451" text="Value" />
           <TableColumn fx:id="serialColumn" prefWidth="152.00005340576172" text="Serial #" />

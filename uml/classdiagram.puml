@@ -29,6 +29,8 @@ searchByName()
 --
 saveInventory()
 loadInventory()
+--
+displayAll() (not a requirement)
 }
 
 Controller -> Inventory
