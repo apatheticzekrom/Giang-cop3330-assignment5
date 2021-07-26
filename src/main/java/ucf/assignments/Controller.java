@@ -37,21 +37,34 @@ public class Controller implements Initializable {
     @FXML
     public void AddItemButtonClicked(ActionEvent actionEvent) {
         // Gets string from valueTextField, serialTextField, and nameTextField
+        // checks that serial is alphanumeric
         // Checks to make sure the name is between 2 and 256
         // runs itemAdd()
         // runs displayAll()
 
         String value = valueTextField.getText();
         String serial = serialTextField.getText();
-        // check if serial exists
-
-
 
         String name = nameTextField.getText();
-        if(name.length() < 257 && name.length() > 1)
-        {
-            itemAdd(value, serial, name);
-        }
+        itemAdd(value, serial, name);
+
+//        boolean todo = false;
+//        if(serial.matches("^.*[^a-zA-Z0-9 ].*$") && name.length() < 257 && name.length() > 1)
+//        {
+//            for(int i = 0; i < Inventory.size(); i++){
+//                if(serial.equals(Inventory.get(i).getSerial()))
+//                {
+//                    todo = false;
+//                } else {
+//                    todo = true;
+//                }
+//            }
+//
+//            if(todo = true){
+
+//                todo = false;
+//            }
+//        }
 
         displayAll();
     }
@@ -80,8 +93,24 @@ public class Controller implements Initializable {
         // runs editExistingItemSN()
         // runs displayAll()
         String serial = serialTextField.getText();
+
         // Check to make sure serial doesnt exist
+//        boolean todo = false;
+//        if(serial.matches("^.*[^a-zA-Z0-9 ].*$"))
+//        {
+//            for(int i = 0; i < Inventory.size(); i++){
+//                if(serial.equals(Inventory.get(i).getSerial()))
+//                {
+//                    todo = false;
+//                } else {
+//                    todo = true;
+//                }
+//            }
+//            if(todo = true){
         editExistingItemSN(displayTable.getSelectionModel().getSelectedIndex(), serial);
+//                todo = false;
+//            }
+//        }
         displayAll();
     }
     @FXML

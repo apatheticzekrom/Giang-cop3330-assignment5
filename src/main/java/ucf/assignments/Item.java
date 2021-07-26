@@ -37,5 +37,38 @@ public class Item {
     public void setName(String name) {
         this.name = name;
     }
-    
+
+    private boolean itemEquals(Item other)
+    {
+        if(this.value.equals(other.value)){
+            return false;
+        }
+        if(!this.serial.equals(other.serial)){
+            return false;
+        }
+        if(!this.name.equals(other.name)){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean equals(Object other)
+    {
+        if(!(other instanceof Item))
+        {
+            return false;
+        }
+
+        Item that = (Item)other;
+        return itemEquals(that);
+
+    }
+
+    @Override
+    public String toString()
+    {
+        String convertedString = this.getValue() + this.getSerial() + this.getName();
+        return convertedString;
+    }
 }
