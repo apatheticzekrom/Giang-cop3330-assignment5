@@ -51,7 +51,7 @@ public class Controller implements Initializable {
         String serial = serialTextField.getText();
 
         String name = nameTextField.getText();
-        if(checkSerial(serial) && checkName(name))
+        if(checkSerial(serial) && checkName(name) && !checkForSerial(Inventory, serial))
         {
             itemAdd(value, serial, name);
         }
@@ -83,7 +83,7 @@ public class Controller implements Initializable {
         // runs editExistingItemSN()
         // runs displayAll()
         String serial = serialTextField.getText();
-        if(checkSerial(serial))
+        if(checkSerial(serial) && !checkForSerial(Inventory, serial))
         {
             editExistingItemSN(displayTable.getSelectionModel().getSelectedIndex(), serial);
         }
