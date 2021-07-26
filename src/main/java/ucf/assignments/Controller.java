@@ -316,11 +316,6 @@ public class Controller implements Initializable {
         return Inventory;
     }
 
-
-
-
-    // ----------------------------------------------------
-    // nonrequired functions
     public void displayAll()
     {
         // Clears display table
@@ -341,6 +336,7 @@ public class Controller implements Initializable {
 
     public boolean checkSerial(String serial)
     {
+        // checks if serial is alphanumeric and 10 characters long
         char[] charArray = serial.toCharArray();
         boolean yes = false;
         if(charArray.length == 10)
@@ -358,6 +354,7 @@ public class Controller implements Initializable {
 
     public boolean checkForSerial(ObservableList<Item> Inventory, String serial)
     {
+        // checks if serial exists within the list
         boolean isIn = false;
         for(int i = 0; i < Inventory.size();i++){
             isIn = Inventory.get(i).getSerial().equals(serial);
@@ -367,6 +364,7 @@ public class Controller implements Initializable {
 
     public boolean checkName(String serial)
     {
+        // checks that name is within 2 and 256
         if(serial.length() < 257 && serial.length() > 1)
         {
                 return true;

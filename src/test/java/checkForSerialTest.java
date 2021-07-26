@@ -20,6 +20,18 @@ public class checkForSerialTest {
         assertEquals(true, actual);
 
     }
+    @Test
+    public void checkForSerialFalseTest()
+    {
+        ObservableList<Item> Inventory = FXCollections.observableArrayList();
+        Controller controller = new Controller();
 
+        Item test = new Item("12", "1234567893", "abc");
+        Inventory.add(test);
+
+        boolean actual = controller.checkForSerial(Inventory, "1234567890");
+        assertEquals(false, actual);
+
+    }
 
 }

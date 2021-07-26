@@ -26,8 +26,10 @@ searchByName()
 saveInventory()
 loadInventory()
 --
-displayAll() (extra)
+displayAll()
 checkSerial()
+checkForSerial()
+checkName()
 clearList()
 }
 
