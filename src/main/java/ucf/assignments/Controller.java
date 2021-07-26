@@ -12,15 +12,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
 
 public class Controller implements Initializable {
     ObservableList<Item> Inventory = FXCollections.observableArrayList();
 
-    @FXML TextField ValueTextField;
-    @FXML TextField SerialTextField;
-    @FXML TextField NameTextField;
+    @FXML TextField valueTextField;
+    @FXML TextField serialTextField;
+    @FXML TextField nameTextField;
     @FXML TableView<Item> displayTable;
     @FXML TableColumn<Item, String> valueColumn;
     @FXML TableColumn<Item, String> serialColumn;
@@ -33,14 +35,16 @@ public class Controller implements Initializable {
         // runs itemAdd()
         // runs displayAll()
 
-        String value = ValueTextField.getText();
-        String serialNumber = SerialTextField.getText();
+        String value = valueTextField.getText();
+        String serial = serialTextField.getText();
         // check if serial exists
 
-        String name = NameTextField.getText();
+
+
+        String name = nameTextField.getText();
         if(name.length() < 257 && name.length() > 1)
         {
-            itemAdd(value, serialNumber, name);
+            itemAdd(value, serial, name);
         }
 
         displayAll();
@@ -54,30 +58,68 @@ public class Controller implements Initializable {
         displayAll();
     }
 
+
     @FXML
     public void EditValueButtonClicked(ActionEvent actionEvent) {
-    }
-    @FXML
-    public void SortBySerialButtonClicked(ActionEvent actionEvent) {
-    }
-    @FXML
-    public void SortByValueButtonClicked(ActionEvent actionEvent) {
-    }
-    @FXML
-    public void SortByNameButtonClicked(ActionEvent actionEvent) {
-    }
-    @FXML
-    public void EditNameButtonClicked(ActionEvent actionEvent) {
-    }
-    @FXML
-    public void SearchNameButtonClicked(ActionEvent actionEvent) {
+        // Gets string from value text field
+        // runs editExistingItemValue()
+        // runs displayAll()
+        String value = valueTextField.getText();
+        editExistingItemValue(displayTable.getSelectionModel().getSelectedIndex(), value);
+        displayAll();
     }
     @FXML
     public void EditSerialButtonClicked(ActionEvent actionEvent) {
+        // Gets string from serial text field
+        // runs editExistingItemSN()
+        // runs displayAll()
+        String serial = serialTextField.getText();
+        // Check to make sure serial doesnt exist
+        editExistingItemSN(displayTable.getSelectionModel().getSelectedIndex(), serial);
+        displayAll();
     }
     @FXML
-    public void SearchSerialButtonClicked(ActionEvent actionEvent) {
+    public void EditNameButtonClicked(ActionEvent actionEvent) {
+        // Gets string from name text field
+        // runs editExistingItemName()
+        // runs displayAll()
+        String name = nameTextField.getText();
+        // check to make sure the description is 256 or less
+        editExistingItemName(displayTable.getSelectionModel().getSelectedIndex(), name);
+        displayAll();
     }
+
+    @FXML
+    public void SortByValueButtonClicked(ActionEvent actionEvent) {
+        sortByValue();
+    }
+    @FXML
+    public void SortBySerialButtonClicked(ActionEvent actionEvent) {
+        sortBySerial();
+    }
+    @FXML
+    public void SortByNameButtonClicked(ActionEvent actionEvent) {
+        sortByName();
+    }
+
+    @FXML
+    public void SearchSerialButtonClicked(ActionEvent actionEvent) {
+        String serial = serialTextField.getText();
+        if(searchBySerial(serial) != -1)
+        {
+            displayTable.getSelectionModel().select(searchBySerial(serial));
+        }
+    }
+    @FXML
+    public void SearchNameButtonClicked(ActionEvent actionEvent) {
+        String name = nameTextField.getText();
+        if(searchByName(name) != -1)
+        {
+            displayTable.getSelectionModel().select(searchByName(name));
+        }
+    }
+
+
     @FXML
     public void SaveAsButtonClicked(ActionEvent actionEvent) {
     }
@@ -102,17 +144,78 @@ public class Controller implements Initializable {
         return Inventory;
     }
 
-//    editExistingItemValue()
-//    editExistingItemSN()
-//    editExistingItemName()
-//
-//    sortByValue()
-//    sortBySerial()
-//    sortByName()
-//
-//    searchBySerial()
-//    searchByName()
-//
+    public  ObservableList<Item> editExistingItemValue(int selectedIndex, String value)
+    {
+        // Takes input string
+        // Sets value of selected item
+        Inventory.get(selectedIndex).setValue(value);
+        return Inventory;
+    }
+    public  ObservableList<Item> editExistingItemSN(int selectedIndex, String serial)
+    {
+        // Takes input string
+        // Sets serial of selected item
+        Inventory.get(selectedIndex).setSerial(serial);
+        return Inventory;
+    }
+    public  ObservableList<Item> editExistingItemName(int selectedIndex, String name)
+    {
+        // Takes input string
+        // Sets name of selected item
+        Inventory.get(selectedIndex).setName(name);
+        return Inventory;
+    }
+
+    public void sortByValue()
+    {
+        // Clears display table
+        displayTable.getItems().clear();
+        Inventory.sort(compareByValue);
+        for(int i = 0; i < Inventory.size();i++)
+        {
+            displayTable.getItems().add(Inventory.get(i));
+        }
+    }
+    public void sortBySerial()
+    {
+        // Clears display table
+        displayTable.getItems().clear();
+        Inventory.sort(compareBySerial);
+        for(int i = 0; i < Inventory.size();i++)
+        {
+            displayTable.getItems().add(Inventory.get(i));
+        }
+    }
+    public void sortByName()
+    {
+        // Clears display table
+        displayTable.getItems().clear();
+        Inventory.sort(compareByName);
+        for(int i = 0; i < Inventory.size();i++)
+        {
+            displayTable.getItems().add(Inventory.get(i));
+        }
+    }
+
+    public int searchBySerial(String serial) {
+
+        for (int i = 0; i < Inventory.size(); i++) {
+            if (Inventory.get(i).getSerial().equals(serial)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    public int searchByName(String name) {
+
+        for (int i = 0; i < Inventory.size(); i++) {
+            if (Inventory.get(i).getName().equals(name)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 //    saveInventory()
 //    loadInventory()
 
@@ -127,11 +230,23 @@ public class Controller implements Initializable {
         }
     }
 
+    //Value sorter
+    Comparator<Item> compareByValue = (Item o1, Item o2) ->
+            o1.getValue().compareTo( o2.getValue() );
+
+    //Serial sorter
+    Comparator<Item> compareBySerial = (Item o1, Item o2) ->
+            o1.getSerial().compareTo( o2.getSerial() );
+
+    //Name sorter
+    Comparator<Item> compareByName = (Item o1, Item o2) ->
+            o1.getName().compareTo( o2.getName() );
+
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
         valueColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("value"));
-        serialColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("serialNumber"));
+        serialColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("serial"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
     }
 }

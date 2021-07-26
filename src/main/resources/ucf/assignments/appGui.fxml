@@ -33,7 +33,7 @@
             <Group layoutX="13.0" layoutY="14.0">
                <children>
                   <Button layoutY="28.0" mnemonicParsing="false" onAction="#EditValueButtonClicked" text="Edit Value" />
-                  <TextField fx:id="ValueTextField" layoutX="1.0" layoutY="1.0" prefHeight="25.0" prefWidth="159.0" promptText="Value in USD" />
+                  <TextField fx:id="valueTextField" layoutX="1.0" layoutY="1.0" prefHeight="25.0" prefWidth="159.0" promptText="Value in USD" />
                </children>
             </Group>
             <Group layoutX="13.0" layoutY="88.0" />
@@ -46,10 +46,10 @@
                   <Label layoutX="1.0" prefHeight="24.0" prefWidth="153.0" text="Sort By" />
                </children>
             </Group>
-            <TextField fx:id="NameTextField" layoutX="13.0" layoutY="204.0" prefHeight="26.0" prefWidth="160.0" promptText="Name" />
+            <TextField fx:id="nameTextField" layoutX="13.0" layoutY="204.0" prefHeight="26.0" prefWidth="160.0" promptText="Name" />
             <Button layoutX="13.0" layoutY="231.0" mnemonicParsing="false" onAction="#EditNameButtonClicked" prefHeight="25.0" prefWidth="72.0" text="Edit Name" />
             <Button layoutX="88.0" layoutY="231.0" mnemonicParsing="false" onAction="#SearchNameButtonClicked" prefHeight="25.0" prefWidth="86.0" text="Search Name" />
-            <TextField fx:id="SerialTextField" layoutX="15.0" layoutY="108.0" prefHeight="25.0" prefWidth="159.0" promptText="Serial Number" />
+            <TextField fx:id="serialTextField" layoutX="15.0" layoutY="108.0" prefHeight="25.0" prefWidth="159.0" promptText="Serial Number" />
             <Button layoutX="14.0" layoutY="135.0" mnemonicParsing="false" onAction="#EditSerialButtonClicked" prefHeight="25.0" prefWidth="73.0" text="Edit Serial" />
             <Button layoutX="90.0" layoutY="135.0" mnemonicParsing="false" onAction="#SearchSerialButtonClicked" prefHeight="25.0" prefWidth="84.0" text="Search Serial" />
          </children>

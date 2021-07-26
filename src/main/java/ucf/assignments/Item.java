@@ -3,13 +3,13 @@ package ucf.assignments;
 public class Item {
     // Variables
     private String value;
-    private String serialNumber;
+    private String serial;
     private String name;
 
     // Constructors
-    public Item(String value, String serialNumber, String name) {
+    public Item(String value, String serial, String name) {
         this.value = value;
-        this.serialNumber = serialNumber;
+        this.serial = serial;
         this.name = name;
     }
 
@@ -22,12 +22,12 @@ public class Item {
         this.value = value;
     }
 
-    public String getSerialNumber() {
-        return serialNumber;
+    public String getSerial() {
+        return serial;
     }
 
-    public void setSerialNumber(String serialNumber) {
-        this.serialNumber = serialNumber;
+    public void setSerial(String serial) {
+        this.serial = serial;
     }
 
     public String getName() {
@@ -37,5 +37,5 @@ public class Item {
     public void setName(String name) {
         this.name = name;
     }
-
+    
 }
