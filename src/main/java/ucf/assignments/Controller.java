@@ -9,12 +9,18 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 
 public class Controller implements Initializable {
@@ -122,9 +128,12 @@ public class Controller implements Initializable {
 
     @FXML
     public void SaveAsButtonClicked(ActionEvent actionEvent) {
+        saveList();
     }
     @FXML
-    public void LoadButtonClicked(ActionEvent actionEvent) {
+    public void LoadButtonClicked(ActionEvent actionEvent) throws FileNotFoundException {
+        File file = fileChooser.showOpenDialog(new Stage());
+        loadList(file);
     }
 
     // Actual Functions -----------------------------------------------------
@@ -216,9 +225,93 @@ public class Controller implements Initializable {
         return -1;
     }
 
-//    saveInventory()
-//    loadInventory()
+    // ----------------------------------------------------
+    FileChooser fileChooser = new FileChooser();
+    FileChooser.ExtensionFilter tsvExt = new FileChooser.ExtensionFilter("(*.tsv)", "*.tsv");
+    FileChooser.ExtensionFilter htmlExt = new FileChooser.ExtensionFilter("(*.html)", "*.html");
+    FileChooser.ExtensionFilter jsonExt = new FileChooser.ExtensionFilter("(*.json)", "*.json");
 
+    public void saveList()
+    {
+
+        // Sends content to the saveText() function
+        File file = fileChooser.showSaveDialog(new Stage());
+        if(file != null)
+        {
+            String content = "";
+            if(fileChooser.getSelectedExtensionFilter().equals(tsvExt))
+            {
+                content += "Value\tSerial\tName\n";
+                for(int i = 0; i < Inventory.size();i++)
+                {
+                    content += Inventory.get(i).getValue();
+                    content += "\t" + Inventory.get(i).getSerial();
+                    content += "\t" + Inventory.get(i).getName() + "\n";
+                }
+
+            } else if (fileChooser.getSelectedExtensionFilter().equals(htmlExt)){
+                content += "<!DOCTYPE html>\n";
+                content +="<html>\n<title> Inventory </title>\n";
+                content += "<body> Value Serial Name </body>\n";
+                for(int i = 0; i < Inventory.size();i++)
+                {
+                    content += "<li>" + Inventory.get(i).getValue() + " " + Inventory.get(i).getSerial() + " " + Inventory.get(i).getName() + "</li>\n";
+                }
+
+                content +="</html>\n";
+
+            } else if (fileChooser.getSelectedExtensionFilter().equals(jsonExt))
+            {
+                content += "{\n";
+                content += "\t\"Inventory\" : [\n";
+                for(int i = 0; i < Inventory.size();i++)
+                {
+                    content += "\t{\"value\": \""+Inventory.get(i).getValue()+"\", \"serial\": \""+Inventory.get(i).getSerial()+"\", \"name\": \""+ Inventory.get(i).getName() + "\" }\n";
+                }
+                content += "\t]\n}";
+            }
+            saveText(file, content);
+        }
+
+    }
+
+    public  void saveText(File file, String content){
+        // Saves the inputted string into a text file
+        try {
+            PrintWriter printWriter = new PrintWriter(file);
+            printWriter.write(content);
+            printWriter.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public  ObservableList<Item> loadList(File file) throws FileNotFoundException {
+        // Prompts user to select a file to be loaded
+        // Inputs the file contents into an item
+        // Runs the addItem() function to add each item to the list
+        // displays the list once completed
+
+        try {
+            Scanner scanner = new Scanner(file);
+            clearList();
+            while (scanner.hasNextLine()) {
+                String value = scanner.nextLine();
+                String serial = scanner.nextLine();
+                String name = scanner.nextLine();
+                itemAdd(value, serial, name);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return Inventory;
+    }
+
+
+
+
+    // ----------------------------------------------------
+    // nonrequired functions
     public void displayAll()
     {
         // Clears display table
@@ -228,6 +321,13 @@ public class Controller implements Initializable {
         {
             displayTable.getItems().add(Inventory.get(i));
         }
+    }
+
+    public  ObservableList<Item> clearList()
+    {
+        // Removes all items from the list
+        Inventory.clear();
+        return Inventory;
     }
 
     //Value sorter
@@ -248,5 +348,10 @@ public class Controller implements Initializable {
         valueColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("value"));
         serialColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("serial"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+        fileChooser.getExtensionFilters().add(tsvExt);
+        fileChooser.getExtensionFilters().add(htmlExt);
+        fileChooser.getExtensionFilters().add(jsonExt);
+
     }
 }
