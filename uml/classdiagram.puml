@@ -15,22 +15,20 @@ Name: String (2-256 char inclusive)
 class Controller {
 addItem()
 removeItem()
---
 editExistingItemValue()
 editExistingItemSN()
 editExistingItemName()
---
 sortByValue()
 sortBySerial()
 sortByName()
---
 searchBySerial()
 searchByName()
---
 saveInventory()
 loadInventory()
 --
-displayAll() (not a requirement)
+displayAll() (extra)
+checkSerial()
+clearList()
 }
 
 Controller -> Inventory

@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
+ *  Copyright 2021 Benjamin Giang
+ */
+
 package ucf.assignments;
 
 import javafx.collections.FXCollections;
@@ -17,7 +22,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -47,7 +51,11 @@ public class Controller implements Initializable {
         String serial = serialTextField.getText();
 
         String name = nameTextField.getText();
-        itemAdd(value, serial, name);
+        if(checkSerial(serial) && checkName(name))
+        {
+            itemAdd(value, serial, name);
+        }
+
         displayAll();
     }
 
@@ -75,7 +83,10 @@ public class Controller implements Initializable {
         // runs editExistingItemSN()
         // runs displayAll()
         String serial = serialTextField.getText();
-        editExistingItemSN(displayTable.getSelectionModel().getSelectedIndex(), serial);
+        if(checkSerial(serial))
+        {
+            editExistingItemSN(displayTable.getSelectionModel().getSelectedIndex(), serial);
+        }
         displayAll();
     }
     @FXML
@@ -85,7 +96,10 @@ public class Controller implements Initializable {
         // runs displayAll()
         String name = nameTextField.getText();
         // check to make sure the description is 256 or less
-        editExistingItemName(displayTable.getSelectionModel().getSelectedIndex(), name);
+        if(checkName(name))
+        {
+            editExistingItemName(displayTable.getSelectionModel().getSelectedIndex(), name);
+        }
         displayAll();
     }
 
@@ -159,6 +173,7 @@ public class Controller implements Initializable {
     {
         // Takes input string
         // Sets serial of selected item
+
         Inventory.get(selectedIndex).setSerial(serial);
         return Inventory;
     }
@@ -323,6 +338,44 @@ public class Controller implements Initializable {
         Inventory.clear();
         return Inventory;
     }
+
+    public boolean checkSerial(String serial)
+    {
+        char[] charArray = serial.toCharArray();
+        boolean yes = false;
+        if(charArray.length == 10)
+        {
+            for(char c:charArray)
+            {
+                yes = Character.isLetterOrDigit(c);
+            }
+        } else
+        {
+            yes = false;
+        }
+        return yes;
+    }
+
+    public boolean checkForSerial(ObservableList<Item> Inventory, String serial)
+    {
+        boolean isIn = false;
+        for(int i = 0; i < Inventory.size();i++){
+            isIn = Inventory.get(i).getSerial().equals(serial);
+        }
+        return isIn;
+    }
+
+    public boolean checkName(String serial)
+    {
+        if(serial.length() < 257 && serial.length() > 1)
+        {
+                return true;
+        } else
+        {
+            return false;
+        }
+    }
+
 
     //Value sorter
     Comparator<Item> compareByValue = (Item o1, Item o2) ->
