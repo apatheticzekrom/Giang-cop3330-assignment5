@@ -40,7 +40,7 @@ public class Item {
 
     private boolean itemEquals(Item other)
     {
-        if(this.value.equals(other.value)){
+        if(!this.value.equals(other.value)){
             return false;
         }
         if(!this.serial.equals(other.serial)){

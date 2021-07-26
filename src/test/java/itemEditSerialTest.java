@@ -6,9 +6,9 @@ import ucf.assignments.Item;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class itemTest {
+public class itemEditSerialTest {
     @Test
-    public void itemAddTest()
+    public void itemUpdateSerialTest()
     {
         ObservableList<Item> Inventory = FXCollections.observableArrayList();
         Controller controller = new Controller();
@@ -16,12 +16,13 @@ public class itemTest {
         Item test = new Item("12", "1234567890", "abc");
         Inventory.add(test);
 
-        ObservableList<Item> actual = controller.itemAdd("12", "1234567890", "abc");
-        System.out.print(Inventory.get(0));
-        System.out.print(actual.get(0));
+        ObservableList<Item> actual = controller.itemAdd("12", "1111111111", "abc");
+        controller.editExistingItemSN(0,"1234567890");
+
         for(int i = 0; i < Inventory.size();i++)
         {
-
+            assertTrue(Inventory.get(i).equals(actual.get(i)));
         }
     }
+
 }

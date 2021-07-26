@@ -43,29 +43,11 @@ public class Controller implements Initializable {
         // runs displayAll()
 
         String value = valueTextField.getText();
+
         String serial = serialTextField.getText();
 
         String name = nameTextField.getText();
         itemAdd(value, serial, name);
-
-//        boolean todo = false;
-//        if(serial.matches("^.*[^a-zA-Z0-9 ].*$") && name.length() < 257 && name.length() > 1)
-//        {
-//            for(int i = 0; i < Inventory.size(); i++){
-//                if(serial.equals(Inventory.get(i).getSerial()))
-//                {
-//                    todo = false;
-//                } else {
-//                    todo = true;
-//                }
-//            }
-//
-//            if(todo = true){
-
-//                todo = false;
-//            }
-//        }
-
         displayAll();
     }
 
@@ -93,24 +75,7 @@ public class Controller implements Initializable {
         // runs editExistingItemSN()
         // runs displayAll()
         String serial = serialTextField.getText();
-
-        // Check to make sure serial doesnt exist
-//        boolean todo = false;
-//        if(serial.matches("^.*[^a-zA-Z0-9 ].*$"))
-//        {
-//            for(int i = 0; i < Inventory.size(); i++){
-//                if(serial.equals(Inventory.get(i).getSerial()))
-//                {
-//                    todo = false;
-//                } else {
-//                    todo = true;
-//                }
-//            }
-//            if(todo = true){
         editExistingItemSN(displayTable.getSelectionModel().getSelectedIndex(), serial);
-//                todo = false;
-//            }
-//        }
         displayAll();
     }
     @FXML
@@ -140,17 +105,17 @@ public class Controller implements Initializable {
     @FXML
     public void SearchSerialButtonClicked(ActionEvent actionEvent) {
         String serial = serialTextField.getText();
-        if(searchBySerial(serial) != -1)
+        if(searchBySerial(Inventory, serial) != -1)
         {
-            displayTable.getSelectionModel().select(searchBySerial(serial));
+            displayTable.getSelectionModel().select(searchBySerial(Inventory, serial));
         }
     }
     @FXML
     public void SearchNameButtonClicked(ActionEvent actionEvent) {
         String name = nameTextField.getText();
-        if(searchByName(name) != -1)
+        if(searchByName(Inventory, name) != -1)
         {
-            displayTable.getSelectionModel().select(searchByName(name));
+            displayTable.getSelectionModel().select(searchByName(Inventory, name));
         }
     }
 
@@ -159,6 +124,7 @@ public class Controller implements Initializable {
     public void SaveAsButtonClicked(ActionEvent actionEvent) {
         saveList();
     }
+
     @FXML
     public void LoadButtonClicked(ActionEvent actionEvent) throws FileNotFoundException {
         File file = fileChooser.showOpenDialog(new Stage());
@@ -235,7 +201,7 @@ public class Controller implements Initializable {
         }
     }
 
-    public int searchBySerial(String serial) {
+    public int searchBySerial(ObservableList<Item> Inventory, String serial) {
 
         for (int i = 0; i < Inventory.size(); i++) {
             if (Inventory.get(i).getSerial().equals(serial)) {
@@ -244,7 +210,7 @@ public class Controller implements Initializable {
         }
         return -1;
     }
-    public int searchByName(String name) {
+    public int searchByName(ObservableList<Item> Inventory, String name) {
 
         for (int i = 0; i < Inventory.size(); i++) {
             if (Inventory.get(i).getName().equals(name)) {
@@ -262,7 +228,6 @@ public class Controller implements Initializable {
 
     public void saveList()
     {
-
         // Sends content to the saveText() function
         File file = fileChooser.showSaveDialog(new Stage());
         if(file != null)
