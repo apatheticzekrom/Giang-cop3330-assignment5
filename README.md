@@ -1,5 +1,22 @@
-# Giang-3140-as5
+# University of Central Florida
+## COP3330: Object Oriented Programming, Summer 2021
 
+# Overview
+Using IntelliJ and Gradle, you will create a GUI-based desktop application to allow a user to track their personal inventory.
+
+The program should allow you to enter an item, a serial number, and estimated value. The program should then be able to display a tabular report of the data that looks like this:
+
+| Value          | Serial Number  |   Name       |
+|----------------|----------------|--------------|
+| $399.00        | AXB124AXY3     | Xbox One     |
+| $599.99        | S40AZBDE47     | Samsung TV   |
+
+
+The program should also allow the user to export the data as either a tab-separated value (TSV) file, or as a HTML file. When exported as an HTML file, the data should be stored inside of a table structure to mimic the displayed appearance.
+
+You will be responsible for both the design (UML diagrams) and implementation (production and test code) of this application
+
+# How to use the Application
 Note: serial has to be in format XXXXXXXXXX and alphanumeric, the program won't let you add/edit the serial if it's not in the right format
 Note: name has to be within 2-256 characters inclusively, the program won't let you add/edit the name if it's not the right length
 
